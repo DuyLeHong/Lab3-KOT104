@@ -76,7 +76,7 @@ sealed class Screen(val route: String, val icon: Int, val title: String) {
     object Profile : Screen("profile", android.R.drawable.ic_menu_save, "Hồ sơ")
 }
 
-private data class ItemThanhToan (var color: Color, var idRes: Int, var title: String)
+private class ItemThanhToanModel (var color: Color, var idRes: Int, var title: String)
 
 class Lab3Activity : ComponentActivity() {
 
@@ -94,7 +94,7 @@ class Lab3Activity : ComponentActivity() {
             val coroutineScope = rememberCoroutineScope()
             val navController = rememberNavController()
 
-            var selectedMethod by remember { mutableStateOf<ItemThanhToan?>(null) }
+            var selectedMethod by remember { mutableStateOf<ItemThanhToanModel?>(null) }
 //
 //            // Tạo 1 list gồm các PaymentMethod component là các item row chứa: Ảnh, tên phương thức, radiobutton tích chọn
 //            val paymentMethods = listOf(
@@ -128,7 +128,9 @@ class Lab3Activity : ComponentActivity() {
                 NavigationGraph(navController = navController)
 
 
-                GetLayout(selectedMethod = selectedMethod, innerPadding = innerPadding, onMethodSelected = { method ->
+                GetLayout(selectedMethod = selectedMethod,
+                    innerPadding = innerPadding,
+                    onMethodSelected = { method ->
                     selectedMethod = method
                     coroutineScope.launch {
                         snackbarHostState.showSnackbar("Selected Payment Method: ${method.title}")
@@ -187,7 +189,7 @@ class Lab3Activity : ComponentActivity() {
 
     //     hàm tạo thành phần bottom nav bar. Trong đó kết hợp sử dụng NavigationBar và NavigationBarItem
     @Composable
-    fun BottomNavigationBar(navController: NavHostController) {
+    private fun BottomNavigationBar(navController: NavHostController) {
 
         // Tạo list dựa vào các object đã khai báo ở main
         val items = listOf(
@@ -259,36 +261,36 @@ class Lab3Activity : ComponentActivity() {
     }
 
 
-    @Preview
+    //@Preview
     @Composable
-    private fun GetLayout (innerPadding : PaddingValues = PaddingValues(), selectedMethod : ItemThanhToan? = null, onMethodSelected: (ItemThanhToan) -> Unit) {
+    private fun GetLayout (innerPadding : PaddingValues = PaddingValues(), selectedMethod : ItemThanhToanModel? = null, onMethodSelected: (ItemThanhToanModel) -> Unit) {
 
-        val listItemThanhToan : MutableList<ItemThanhToan> = mutableListOf()
+        val listItemThanhToan : MutableList<ItemThanhToanModel> = mutableListOf()
 
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
 
-        listItemThanhToan.add(ItemThanhToan(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
+        listItemThanhToan.add(ItemThanhToanModel(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
 
         Column (
             Modifier
@@ -356,7 +358,7 @@ class Lab3Activity : ComponentActivity() {
     }
 
     @Composable
-    fun GetLayoutDiaChiNhanHang () {
+    private fun GetLayoutDiaChiNhanHang () {
         Column (
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -381,7 +383,7 @@ class Lab3Activity : ComponentActivity() {
     }
     
     @Composable
-    fun GetTextContent (text: String) {
+    private fun GetTextContent (text: String) {
         Text(
             text = text,
             color = Color.White
@@ -389,7 +391,7 @@ class Lab3Activity : ComponentActivity() {
     }
 
     @Composable
-    fun GetTextTitle(title: String = "Trang chu") {
+    private fun GetTextTitle(title: String = "Trang chu") {
         Text(
             text = title,
             fontSize = 20.sp,
