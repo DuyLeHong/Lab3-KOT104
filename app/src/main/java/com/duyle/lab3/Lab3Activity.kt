@@ -16,11 +16,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -64,50 +68,101 @@ class Lab3Activity : ComponentActivity() {
         }
     }
 
+    private class ItemModel (var color: Color, var idRes: Int, var title: String)
+
     @Preview
     @Composable
     private fun GetLayout (innerPadding : PaddingValues = PaddingValues()) {
 
+        val listItemThanhToan : MutableList<ItemModel> = mutableListOf()
 
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
+        listItemThanhToan.add(ItemModel(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#EB8B33".toColorInt()), R.drawable.ic_logo_paypal, "Paypal"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#D93485".toColorInt()), R.drawable.ic_logo_momo, "Momo"))
+
+        listItemThanhToan.add(ItemModel(color = Color("#57BFF7".toColorInt()), R.drawable.ic_logo_zalopay, "Zalo Pay"))
+
+        Column (
+            Modifier
                 .background(color = Color("#2A2727".toColorInt()))
+                .fillMaxSize()
                 .padding(
                     top = innerPadding.calculateTopPadding() + 10.dp,
                     start = 24.dp,
                     bottom = 24.dp,
                     end = 24.dp
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-//            GetTextTitle("Trang chu")
-
+                )){
             GetLayoutDiaChiNhanHang()
 
-            GetRowItem(color = Color("#EB8B33".toColorInt()))
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(top = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+//            GetTextTitle("Trang chu")
 
-            GetRowItem(color = Color("#D93485".toColorInt()))
+                items (listItemThanhToan) {
+                        itemThanhToan ->
+                    GetRowItem(itemThanhToan.color, itemThanhToan.idRes, itemThanhToan.title)
 
-            GetRowItem(color = Color("#57BFF7".toColorInt()))
+                }
 
-            GetRowItem(color = Color("#6EE8E8".toColorInt()))
+            }
         }
+
     }
 
+
+
     @Composable
-    fun GetRowItem (color: Color = Color.Red) {
+    private fun GetRowItem(color: Color, idRes: Int = R.drawable.ic_logo_momo, title: String = "Paypal") {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
-                .background(color, shape = RoundedCornerShape(15.dp))
-                .height(60.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .background(color = color, shape = RoundedCornerShape(12.dp))
+                .height(70.dp)
+                .padding(5.dp),
+            verticalAlignment = Alignment.CenterVertically
 
-            ) {
+        ) {
+            Image(
+                painter = painterResource(id = idRes), contentDescription = "",
+                modifier = Modifier.size(60.dp)
+            )
 
+            Text(
+                text = title,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(10.dp, 0.dp, 0.dp, 0.dp),
+                color = Color.White,
+                fontSize = 20.sp
+            )
+
+            RadioButton(selected = false, onClick = {
+
+            })
         }
     }
 
@@ -117,7 +172,10 @@ class Lab3Activity : ComponentActivity() {
             modifier = Modifier.fillMaxWidth()
         ) {
             GetTextContent(text = "Địa chỉ nhận hàng")
-            Row (Modifier.fillMaxWidth().padding(start = 20.dp)){
+            Row (
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp)){
                 Image(Icons.Default.LocationOn,
                     contentDescription = "",
                     colorFilter = ColorFilter.tint(Color.Red),)
