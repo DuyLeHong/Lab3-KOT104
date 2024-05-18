@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -57,13 +58,18 @@ fun GetTextTitle(title: String = "Trang chu") {
 
 //@Preview1
 @Composable
-fun GetLayout(msg: String = "Trang chu") {
+private fun GetLayout(msg: String = "Trang chu", paddingValues: PaddingValues = PaddingValues()) {
 
     var text by remember { mutableStateOf(msg) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(24.dp),
+            .padding(
+                top = paddingValues.calculateTopPadding() + 10.dp,
+                start = 24.dp,
+                bottom = 24.dp,
+                end = 24.dp
+            ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
