@@ -42,6 +42,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -63,6 +64,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     //implementation(libs.androidx.material3.android)
+    implementation("androidx.compose.material:material:1.6.7")
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
